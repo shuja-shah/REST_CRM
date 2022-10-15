@@ -33,3 +33,9 @@ class UserManager(BaseUserManager):
             user.delete()
             return str('deleted!')
         return str('No User Found!')
+    
+    def get_user(self,username):
+        user = self.get(username=username)
+        if user:
+            return user
+        return str('no such user exists')
