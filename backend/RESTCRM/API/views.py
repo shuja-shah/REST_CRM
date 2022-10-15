@@ -3,6 +3,7 @@ import json
 
 from django.forms.models import model_to_dict
 from Lists.models import List
+from Lists.serializers import ModelList
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -15,5 +16,5 @@ def api_home(request, *args, **kwargs):
     data= {}
     if model_data:
         data = model_to_dict(model_data)
-        print(data)
+        print(List.object.all())
     return Response(data)
