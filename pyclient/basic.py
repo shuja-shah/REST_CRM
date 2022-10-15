@@ -2,7 +2,7 @@ import requests
 
 ENDPOINT= 'http://localhost:8000/api/'
 
-GET_RESPONE= requests.post(ENDPOINT, json={"task": "Finalize The POST method", })
+GET_RESPONE= requests.get(ENDPOINT, json={"task": "Read a book", })
 
 print(GET_RESPONE.status_code)
 print(GET_RESPONE.json)
