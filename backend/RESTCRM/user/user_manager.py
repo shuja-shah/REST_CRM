@@ -26,3 +26,7 @@ class UserManager(BaseUserManager):
         user.is_admin = True
         user.save(using=self._db)
         return user
+    
+    def delete_user(self, username):
+        user = self.get(username=username)
+        user.delete()
