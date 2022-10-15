@@ -4,6 +4,8 @@
 # from Lists.serializers import ModelList
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from user.models import List, user
+from user.seralizer import User_SERIALIZATION
 
 
 @api_view(["GET", "POST"])
@@ -24,9 +26,19 @@ def api_home(request, *args, **kwargs):
     #     return Response(serializer.errors)
     # Send request to create user!
     if request.method == 'POST':
-        username = request.data.get('username')
-        email = request.data.get('email')
-        password = request.data.get('password')
-        #request will be Json body so we need to seralize it 
+        seralizer = User_SERIALIZATION(data = request.data)
+        if seralizer.is_valid(raise_exception=True):
+            seralizer.save()
+            return Response(seralizer.data), 201
+        return Response(seralizer.errors), 400
+    if request.method == 'GET':
+        # Get all tasks of that specific username
+        username = request.GET.get('username')
+        target = user.objects.get(username=username)
+        if target:
+            user_id= user.id
+            tasks = List.objects.filter(user_id=user_id)
+            return Response(tasks), 200
+        return Response('No such user exists'), 404
+            
         
-        return Response({'message': 'User created successfully'})
