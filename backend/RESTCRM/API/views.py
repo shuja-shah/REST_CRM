@@ -22,4 +22,11 @@ def api_home(request, *args, **kwargs):
     #         serializer.save()
     #         return Response(serializer.data)
     #     return Response(serializer.errors)
-    return(str('DEBUGIGNg'))
+    # Send request to create user!
+    if request.method == 'POST':
+        username = request.data.get('username')
+        email = request.data.get('email')
+        password = request.data.get('password')
+        #request will be Json body so we need to seralize it 
+        
+        return Response({'message': 'User created successfully'})
