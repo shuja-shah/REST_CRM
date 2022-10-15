@@ -18,7 +18,7 @@ def api_home(request, *args, **kwargs):
         return Response(data)
     if request.method == "POST":
         serializer= ModelList(data = request.data)
-        if serializer.is_valid():
+        if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
