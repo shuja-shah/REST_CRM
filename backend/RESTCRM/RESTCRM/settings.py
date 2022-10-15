@@ -54,6 +54,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'RESTCRM.urls'
+AUTH_USER_MODEL = 'user.user'
 
 TEMPLATES = [
     {
