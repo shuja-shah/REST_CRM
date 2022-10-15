@@ -29,8 +29,10 @@ def api_home(request, *args, **kwargs):
         seralizer = User_SERIALIZATION(data = request.data)
         if seralizer.is_valid(raise_exception=True):
             seralizer.save()
-            return Response(seralizer.data), 201
-        return Response(seralizer.errors), 400
+            return Response('USER SUCCESFFULLY CREATED'), 201
+        else:
+            return Response('USER NOT CREATED'), 400
+   
     if request.method == 'GET':
         # Get all tasks of that specific username
         username = request.GET.get('username')
@@ -39,6 +41,7 @@ def api_home(request, *args, **kwargs):
             user_id= user.id
             tasks = List.objects.filter(user_id=user_id)
             return Response(tasks), 200
-        return Response('No such user exists'), 404
+        else:
+            return Response('No such user exists'), 400
             
         
