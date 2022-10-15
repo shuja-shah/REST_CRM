@@ -29,4 +29,7 @@ class UserManager(BaseUserManager):
     
     def delete_user(self, username):
         user = self.get(username=username)
-        user.delete()
+        if user:
+            user.delete()
+            return str('deleted!')
+        return str('No User Found!')
