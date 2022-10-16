@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'user',
     'API',
-    'Lists',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +53,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'RESTCRM.urls'
+AUTH_USER_MODEL = 'user.user'
 
 TEMPLATES = [
     {
