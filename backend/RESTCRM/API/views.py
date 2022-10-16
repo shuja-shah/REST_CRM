@@ -1,7 +1,8 @@
 '''Module Responsible for API View'''
 
-# from Lists.models import List
-# from Lists.serializers import ModelList
+import json
+
+from django.forms.models import model_to_dict
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from user.models import List, user
@@ -10,21 +11,7 @@ from user.seralizer import User_SERIALIZATION
 
 @api_view(["GET", "POST"])
 def api_home(request, *args, **kwargs):
-    '''Func Retuns Data from DB'''
-    # if request.method == "GET":
-    #     model_instance = List.objects.all().order_by('?').first()
-    #     data= {}
-    #     if model_instance:
-    #         data = ModelList(model_instance).data
-    #     str('Not FOUND ERROR 404')
-    #     return Response(data)
-    # if request.method == "POST":
-    #     serializer= ModelList(data = request.data)
-    #     if serializer.is_valid(raise_exception=True):
-    #         serializer.save()
-    #         return Response(serializer.data)
-    #     return Response(serializer.errors)
-    # Send request to create user!
+    '''API Home'''
     if request.method == 'POST':
         seralizer = User_SERIALIZATION(data = request.data)
         if seralizer.is_valid(raise_exception=True):
@@ -34,13 +21,14 @@ def api_home(request, *args, **kwargs):
             return Response('USER NOT CREATED'), 400
    
     if request.method == 'GET':
-        # Get all tasks of that specific username
         username = request.GET.get('username')
-        target = user.objects.get(username=username)
+        target = user.objects.get_user(username=username)
         if target:
-            user_id= user.id
-            tasks = List.objects.filter(user_id=user_id)
-            return Response(tasks), 200
+            target_id = target.id
+            all_tasks = List.objects.filter(user=target_id)
+            result = json.dumps([model_to_dict(task) for task in all_tasks])
+            return Response(json.JSONDecoder().decode(result))
+            
         else:
             return Response('No such user exists'), 400
             

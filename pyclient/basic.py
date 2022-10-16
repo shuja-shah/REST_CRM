@@ -2,11 +2,7 @@ import requests
 
 ENDPOINT= 'http://localhost:8000/api/'
 
-GET_RESPONE= requests.post(ENDPOINT, json={
-    'username': 'Dada_BABA',
-    'email': 'FSM@example.com',
-    'password': 'testInG',
-})
+GET_RESPONE= requests.get(ENDPOINT, params={'username': 'Shuja'})
 
 print(GET_RESPONE.status_code)
 print(GET_RESPONE.json)
